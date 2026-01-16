@@ -1,0 +1,27 @@
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+development:
+  <<: *default
+  database: desafio_v360_development
+  username: beatriz
+  password: '123456'
+  host: localhost
+
+test:
+  <<: *default
+  database: desafio_v360_test
+  username: beatriz
+  password: '123456'
+  host: localhost
+
+production:
+  <<: *default
+  database: desafio_v360_production
+  username: desafio_v360
+  password: <%= ENV["DESAFIO_V360_DATABASE_PASSWORD"] %>
+  host: localhost
