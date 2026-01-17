@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
+  before_action :set_todo_list, only: %i[create edit update]
+  before_action :set_task, only: %i[edit update toggle destroy]
+
   def create
-    @todo_list = TodoList.find(params[:todo_list_id])
     @task = @todo_list.tasks.build(task_params)
 
     if @task.save
@@ -11,14 +13,9 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @todo_list = TodoList.find(params[:todo_list_id])
-    @task = @todo_list.tasks.find(params[:id])
   end
 
   def update
-    @todo_list = TodoList.find(params[:todo_list_id])
-    @task = @todo_list.tasks.find(params[:id])
-
     if @task.update(task_params)
       redirect_to @todo_list, notice: "Tarefa atualizada!"
     else
@@ -27,20 +24,26 @@ class TasksController < ApplicationController
   end
 
   def toggle
-    task = Task.find(params[:id])
-    task.update(completed: !task.completed)
-    redirect_to todo_list_path(task.todo_list)
+    @task.update(completed: !@task.completed)
+    redirect_to todo_list_path(@task.todo_list)
   end
 
   def destroy
-    task = Task.find(params[:id])
-    todo_list = task.todo_list
-    task.destroy
+    todo_list = @task.todo_list
+    @task.destroy
 
     redirect_to todo_list_path(todo_list), notice: "Tarefa excluída!"
   end
 
   private
+
+  def set_todo_list
+    @todo_list = TodoList.find(params[:todo_list_id])
+  end
+
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
   def task_params
     params.require(:task).permit(:title)
