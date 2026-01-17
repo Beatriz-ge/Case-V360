@@ -1,9 +1,8 @@
 <div class="page">
   <div class="card edit-card">
-
     <h1 class="title">Editar lista</h1>
-
     <%= form_with model: @list, local: true do |f| %>
+
       <div class="form-group">
         <%= f.label :title, "Título da lista", class: "subtitle" %>
         <%= f.text_field :title, class: "input", autofocus: true %>
@@ -13,8 +12,7 @@
         <%= f.submit "Salvar", class: "btn primary" %>
         <%= link_to "Cancelar", todo_lists_path, class: "btn secondary" %>
       </div>
+      
     <% end %>
-    
-
   </div>
 </div>
