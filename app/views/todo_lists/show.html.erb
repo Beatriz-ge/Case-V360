@@ -1,44 +1,49 @@
-<h1><%= @list.title %></h1>
+<div class="page">
+  <div class="card">
 
-<!-- Formulário para adicionar nova task -->
-<%= form_with model: [@list, @task], local: true do |f| %>
-  <div>
-    <%= f.label :title, "Nova Tarefa" %>
-    <%= f.text_field :title %>
-  </div>
-  <div>
-    <%= f.submit "Adicionar" %>
-  </div>
-<% end %>
+    <h1 class="title"><%= @list.title %></h1>
 
-<hr>
+    <%= form_with model: [@list, @task], local: true, class: "task-form" do |f| %>
 
-<h2>Minhas Tarefas</h2>
+      <div class="form-group">
+        <%= f.label :title, "Nova Tarefa", class: "subtitle" %>
+        <%= f.text_field :title, class: "input" %>
+      </div>
 
-<ul>
-  <% @list.tasks.each do |task| %>
-    <li>
-      <!-- Mostra se a task está concluída -->
-      <%= task.completed ? "✔" : "○" %> <%= task.title %>
+      <div class="form-actions">
+        <%= f.submit "Adicionar", class: "btn primary" %>
+      </div>
 
-      <!-- Formulário para concluir (PATCH) -->
-      <%= form_with model: [@list, task], method: :patch, local: true, class: "inline-form" do |f| %>
-        <%= f.submit "Concluir" %>
+    <% end %>
+
+    <hr>
+
+    <h2 class="subtitle">Minhas Tarefas</h2>
+
+    <ul class="task-list">
+      <% @list.tasks.each do |task| %>
+        <li class="task-item <%= 'done' if task.completed %>">
+
+          <span class="task-title">
+            <%= task.completed ? "✔" : "○" %>
+            <%= task.title %>
+          </span>
+
+          <div class="task-actions">
+            <%= form_with model: [@list, task], method: :patch, local: true, class: "inline-form" do |f| %>
+              <%= f.submit "Concluir", class: "btn small success" %>
+            <% end %>
+
+            <%= form_with model: [@list, task], method: :delete, local: true, class: "inline-form" do |f| %>
+              <%= f.submit "Excluir", class: "btn small danger", data: { confirm: "Tem certeza?" } %>
+            <% end %>
+          </div>
+
+        </li>
       <% end %>
+    </ul>
 
-      <!-- Formulário para excluir (DELETE) -->
-      <%= form_with model: [@list, task], method: :delete, local: true, class: "inline-form" do |f| %>
-        <%= f.submit "Excluir", data: { confirm: "Tem certeza?" } %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+    <%= link_to "Voltar para todas as listas", todo_lists_path, class: "back-link" %>
 
-<%= link_to "Voltar para todas as listas", todo_lists_path %>
-
-<style>
-.inline-form {
-  display: inline-block;
-  margin-left: 5px;
-}
-</style>
+  </div>
+</div>
