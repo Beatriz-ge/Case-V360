@@ -16,7 +16,6 @@
     <% end %>
 
     <%= form_with model: [@list, @task], local: true, class: "task-form" do |f| %>
-
       <div class="form-group">
         <%= f.label :title, "Nova Tarefa", class: "subtitle" %>
 
@@ -32,7 +31,6 @@
       <div class="form-actions">
         <%= f.submit "Adicionar", class: "btn primary" %>
       </div>
-
     <% end %>
 
     <hr>
@@ -53,7 +51,6 @@
     <ul class="task-list">
       <% @list.tasks.each do |task| %>
         <li class="task-item <%= 'done' if task.completed %>">
-
           <span class="task-title">
             <%= task.completed ? "✔" : "○" %>
             <%= task.title %>
@@ -68,12 +65,19 @@
               <%= f.submit "Excluir", class: "btn small danger", data: { confirm: "Tem certeza?" } %>
             <% end %>
           </div>
-
         </li>
       <% end %>
     </ul>
 
     <%= link_to "Voltar para todas as listas", todo_lists_path, class: "back-link" %>
+
+    <!-- Botão funcional de Excluir Lista com estilo de link -->
+    <div style="text-align: center;">
+      <%= form_with model: @list, method: :delete, local: true do |f| %>
+        <%= f.submit "Excluir Lista", class: "back-link-button", data: { confirm: "Tem certeza que deseja excluir a lista?" } %>
+      <% end %>
+    </div>
+
 
   </div>
 </div>

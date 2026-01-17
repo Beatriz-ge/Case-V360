@@ -32,6 +32,13 @@ class TodoListsController < ApplicationController
     @progress = @total_tasks.zero? ? 0 : (@completed_tasks.to_f / @total_tasks * 100).round
   end
 
+  def destroy
+    @list = TodoList.find(params[:id])
+    title = @list.title
+    @list.destroy
+    redirect_to todo_lists_path
+  end
+
   private
 
   def list_params
