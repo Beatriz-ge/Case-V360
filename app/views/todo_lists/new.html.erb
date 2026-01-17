@@ -3,14 +3,27 @@
 
     <h1 class="title">Nova Lista</h1>
 
+    <% if flash[:alert] %>
+      <div class="alert">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
     <%= form_with model: @list, local: true, class: "task-form" do |f| %>
 
       <div class="form-group">
         <%= f.label :title, "Nome da lista", class: "subtitle" %>
-        <%= f.text_field :title, class: "input" %>
+
+        <% if @list&.errors&.any? %>
+          <div class="field-error">
+            <%= @list.errors[:title].first %>
+          </div>
+        <% end %>
+
+        <%= f.text_field :title, class: "input", required: true %>
       </div>
 
-      <div>
+      <div class="form-actions">
         <%= f.submit "Criar", class: "btn primary" %>
       </div>
 
