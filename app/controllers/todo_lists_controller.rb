@@ -21,6 +21,17 @@ class TodoListsController < ApplicationController
     end
   end
 
+  def show
+    @list = TodoList.find(params[:id])
+    @task = Task.new
+
+    @total_tasks = @list.tasks.count
+    @completed_tasks = @list.tasks.where(completed: true).count
+    @pending_tasks = @total_tasks - @completed_tasks
+
+    @progress = @total_tasks.zero? ? 0 : (@completed_tasks.to_f / @total_tasks * 100).round
+  end
+
   private
 
   def list_params
