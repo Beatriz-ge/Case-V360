@@ -1,0 +1,5 @@
+<h1>Nova Lista</h1>
+<%= form_with model: @list do |f| %>
+  <%= f.text_field :title, placeholder: "Nome da lista" %>
+  <%= f.submit "Criar" %>
+<% end %>

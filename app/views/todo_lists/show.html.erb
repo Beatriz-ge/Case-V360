@@ -1,0 +1,44 @@
+<h1><%= @list.title %></h1>
+
+<!-- Formulário para adicionar nova task -->
+<%= form_with model: [@list, @task], local: true do |f| %>
+  <div>
+    <%= f.label :title, "Nova Tarefa" %>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.submit "Adicionar" %>
+  </div>
+<% end %>
+
+<hr>
+
+<h2>Minhas Tarefas</h2>
+
+<ul>
+  <% @list.tasks.each do |task| %>
+    <li>
+      <!-- Mostra se a task está concluída -->
+      <%= task.completed ? "✔" : "○" %> <%= task.title %>
+
+      <!-- Formulário para concluir (PATCH) -->
+      <%= form_with model: [@list, task], method: :patch, local: true, class: "inline-form" do |f| %>
+        <%= f.submit "Concluir" %>
+      <% end %>
+
+      <!-- Formulário para excluir (DELETE) -->
+      <%= form_with model: [@list, task], method: :delete, local: true, class: "inline-form" do |f| %>
+        <%= f.submit "Excluir", data: { confirm: "Tem certeza?" } %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Voltar para todas as listas", todo_lists_path %>
+
+<style>
+.inline-form {
+  display: inline-block;
+  margin-left: 5px;
+}
+</style>
