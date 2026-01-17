@@ -1,6 +1,5 @@
 <div class="page">
   <div class="card">
-
     <h1 class="title">Organiza aí!</h1>
 
     <div class="new-list">
@@ -10,10 +9,22 @@
     <ul class="list-group">
       <% @lists.each do |list| %>
         <li class="list-item <%= 'completed-list' if list.completed? %>">
-          <%= link_to list.title, todo_list_path(list), class: "list-link" %>
-          <% if list.completed? %>
-            <span class="completed-badge">Concluída</span>
-          <% end %>
+          <div class="list-content">
+            <%= link_to list.title, todo_list_path(list), class: "list-link" %>
+          </div>
+
+          <!-- Ações: editar à esquerda, concluído à direita -->
+          <div class="list-actions">
+            <%= link_to edit_todo_list_path(list), class: "edit-icon", title: "Editar lista" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#26425A" viewBox="0 0 24 24">
+                <path d="M3 17.25V21h3.75l11-11.03-3.75-3.75L3 17.25zm18.37-11.37c.39-.39.39-1.02 0-1.41l-2.83-2.83a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.32-1.34z"/>
+              </svg>
+            <% end %>
+
+            <% if list.completed? %>
+              <span class="completed-badge">Concluída</span>
+            <% end %>
+          </div>
         </li>
       <% end %>
     </ul>
