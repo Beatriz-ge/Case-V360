@@ -39,6 +39,17 @@
 
     <h2 class="subtitle">Minhas Tarefas</h2>
 
+    <div class="task-summary">
+      <p>Total de tarefas: <%= @total_tasks %></p>
+      <p>Tarefas pendentes: <%= @pending_tasks %></p>
+      <p>Tarefas concluídas: <%= @completed_tasks %></p>
+
+      <div class="progress-bar">
+        <div class="progress-bar-fill" style="width: <%= @progress %>%"></div>
+      </div>
+      <div class="progress-text">Progresso: <%= @progress %>%</div>
+    </div>
+
     <ul class="task-list">
       <% @list.tasks.each do |task| %>
         <li class="task-item <%= 'done' if task.completed %>">
