@@ -3,11 +3,30 @@
 
     <h1 class="title"><%= @list.title %></h1>
 
+    <% if flash[:notice] %>
+      <div class="notice">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <div class="alert">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
     <%= form_with model: [@list, @task], local: true, class: "task-form" do |f| %>
 
       <div class="form-group">
         <%= f.label :title, "Nova Tarefa", class: "subtitle" %>
-        <%= f.text_field :title, class: "input" %>
+
+        <% if @task&.errors&.any? %>
+          <div class="field-error">
+            <%= @task.errors[:title].first %>
+          </div>
+        <% end %>
+
+        <%= f.text_field :title, class: "input", required: true %>
       </div>
 
       <div class="form-actions">
