@@ -15,8 +15,9 @@
       </div>
     <% end %>
 
+    <!-- Formulário para nova tarefa -->
     <%= form_with model: [@list, @task], local: true, class: "task-form" do |f| %>
-      <div class="form-group">
+      <div class="form-group full-width">
         <%= f.label :title, "Nova Tarefa", class: "subtitle" %>
 
         <% if @task&.errors&.any? %>
@@ -25,11 +26,10 @@
           </div>
         <% end %>
 
-        <%= f.text_field :title, class: "input", required: true %>
-      </div>
-
-      <div class="form-actions">
-        <%= f.submit "Adicionar", class: "btn primary" %>
+        <div class="input-with-button">
+          <%= f.text_field :title, class: "input full-width-input", required: true %>
+          <%= f.submit "Adicionar", class: "btn primary" %>
+        </div>
       </div>
     <% end %>
 
@@ -38,9 +38,9 @@
     <h2 class="subtitle">Minhas Tarefas</h2>
 
     <div class="task-summary">
-      <p>Total de tarefas: <%= @total_tasks %></p>
-      <p>Tarefas pendentes: <%= @pending_tasks %></p>
-      <p>Tarefas concluídas: <%= @completed_tasks %></p>
+      <p>Total: <%= @total_tasks %></p>
+      <p>Pendentes: <%= @pending_tasks %></p>
+      <p>Concluídas: <%= @completed_tasks %></p>
 
       <div class="progress-bar">
         <div class="progress-bar-fill" style="width: <%= @progress %>%"></div>
@@ -48,6 +48,7 @@
       <div class="progress-text">Progresso: <%= @progress %>%</div>
     </div>
 
+    <!-- Lista de tarefas -->
     <ul class="task-list">
       <% @list.tasks.each do |task| %>
         <li class="task-item <%= 'done' if task.completed %>">
@@ -57,13 +58,8 @@
           </span>
 
           <div class="task-actions">
-            <%= form_with model: [@list, task], method: :patch, local: true, class: "inline-form" do |f| %>
-              <%= f.submit "Concluir", class: "btn small success" %>
-            <% end %>
-
-            <%= form_with model: [@list, task], method: :delete, local: true, class: "inline-form" do |f| %>
-              <%= f.submit "Excluir", class: "btn small danger", data: { confirm: "Tem certeza?" } %>
-            <% end %>
+            <%= button_to "Concluir", toggle_todo_list_task_path(@list, task), method: :patch, class: "btn small success" %>
+            <%= button_to "Excluir", todo_list_task_path(@list, task), method: :delete, class: "btn small danger", data: { confirm: "Tem certeza?" } %>
           </div>
         </li>
       <% end %>
@@ -71,13 +67,11 @@
 
     <%= link_to "Voltar para todas as listas", todo_lists_path, class: "back-link" %>
 
-    <!-- Botão funcional de Excluir Lista com estilo de link -->
+    <!-- Botão Excluir Lista -->
     <div style="text-align: center;">
       <%= form_with model: @list, method: :delete, local: true do |f| %>
         <%= f.submit "Excluir Lista", class: "back-link-button", data: { confirm: "Tem certeza que deseja excluir a lista?" } %>
       <% end %>
     </div>
-
-
   </div>
 </div>
