@@ -1,5 +1,22 @@
-<h1>Nova Lista</h1>
-<%= form_with model: @list do |f| %>
-  <%= f.text_field :title, placeholder: "Nome da lista" %>
-  <%= f.submit "Criar" %>
-<% end %>
+<div class="page">
+  <div class="card">
+
+    <h1 class="title">Nova Lista</h1>
+
+    <%= form_with model: @list, local: true, class: "task-form" do |f| %>
+
+      <div class="form-group">
+        <%= f.label :title, "Nome da lista", class: "subtitle" %>
+        <%= f.text_field :title, class: "input" %>
+      </div>
+
+      <div>
+        <%= f.submit "Criar", class: "btn primary" %>
+      </div>
+
+    <% end %>
+
+    <%= link_to "Voltar para todas as listas", todo_lists_path, class: "back-link" %>
+
+  </div>
+</div>
