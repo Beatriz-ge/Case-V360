@@ -11,7 +11,7 @@
 
     <%= form_with model: @list, local: true, class: "task-form" do |f| %>
 
-      <div class="form-group">
+      <div class="form-group full-width">
         <%= f.label :title, "Nome da lista", class: "subtitle" %>
 
         <% if @list&.errors&.any? %>
@@ -20,11 +20,11 @@
           </div>
         <% end %>
 
-        <%= f.text_field :title, class: "input", required: true %>
-      </div>
-
-      <div class="form-actions">
-        <%= f.submit "Criar", class: "btn primary" %>
+        <!-- Input e botão na mesma linha -->
+        <div class="input-with-button">
+          <%= f.text_field :title, class: "input full-width-input", required: true %>
+          <%= f.submit "Criar", class: "btn primary" %>
+        </div>
       </div>
 
     <% end %>

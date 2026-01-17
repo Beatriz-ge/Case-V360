@@ -1,11 +1,18 @@
 class TodoListsController < ApplicationController
+  before_action :set_list, only: %i[show edit update destroy]
+
   def index
     @lists = TodoList.all
   end
 
   def show
-    @list = TodoList.find(params[:id])
     @task = Task.new
+
+    @total_tasks = @list.tasks.count
+    @completed_tasks = @list.tasks.where(completed: true).count
+    @pending_tasks = @total_tasks - @completed_tasks
+
+    @progress = @total_tasks.zero? ? 0 : (@completed_tasks.to_f / @total_tasks * 100).round
   end
 
   def new
@@ -21,28 +28,29 @@ class TodoListsController < ApplicationController
     end
   end
 
-  def show
-    @list = TodoList.find(params[:id])
-    @task = Task.new
+  def edit
+  end
 
-    @total_tasks = @list.tasks.count
-    @completed_tasks = @list.tasks.where(completed: true).count
-    @pending_tasks = @total_tasks - @completed_tasks
-
-    @progress = @total_tasks.zero? ? 0 : (@completed_tasks.to_f / @total_tasks * 100).round
+  def update
+    if @list.update(list_params)
+      redirect_to @list, notice: "Lista atualizada com sucesso!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
-    @list = TodoList.find(params[:id])
-    title = @list.title
     @list.destroy
     redirect_to todo_lists_path
   end
 
   private
 
+  def set_list
+    @list = TodoList.find(params[:id])
+  end
+
   def list_params
     params.require(:todo_list).permit(:title)
   end
 end
-
