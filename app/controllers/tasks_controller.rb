@@ -21,7 +21,7 @@ class TasksController < ApplicationController
     todo_list = task.todo_list
     task.destroy
 
-    flash[:notice] = "Tarefa excluída com sucesso ✅"
+    flash[:notice] = "Tarefa excluída com sucesso!"
     redirect_to todo_list_path(todo_list)
   end
 
