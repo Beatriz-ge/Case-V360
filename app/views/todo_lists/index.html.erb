@@ -9,11 +9,13 @@
 
     <ul class="list-group">
       <% @lists.each do |list| %>
-        <li class="list-item">
+        <li class="list-item <%= 'completed-list' if list.completed? %>">
           <%= link_to list.title, todo_list_path(list), class: "list-link" %>
+          <% if list.completed? %>
+            <span class="completed-badge">Concluída</span>
+          <% end %>
         </li>
       <% end %>
     </ul>
-
   </div>
 </div>
