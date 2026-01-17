@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   def create
     @todo_list = TodoList.find(params[:todo_list_id])
     @task = @todo_list.tasks.build(task_params)
-    
+
     if @task.save
       redirect_to @todo_list
     else
@@ -20,6 +20,8 @@ class TasksController < ApplicationController
     task = Task.find(params[:id])
     todo_list = task.todo_list
     task.destroy
+
+    flash[:notice] = "Tarefa excluída com sucesso ✅"
     redirect_to todo_list_path(todo_list)
   end
 
