@@ -44,6 +44,21 @@ Relacionamento:
 * `List` **has_many** `Tasks`
 * `Task` **belongs_to** `List`
 
+## 🏗️ Arquitetura do Projeto
+
+O projeto utiliza a arquitetura MVC, padrão do Ruby on Rails, que promove a separação de responsabilidades entre as camadas da aplicação, facilitando manutenção, organização e escalabilidade.
+
+1. O **browser** faz uma requisição HTTP.
+2. As **routes** direcionam a requisição para o controller correto.
+3. O **controller** coordena a ação e chama os models quando necessário.
+4. Os **models** acessam o banco de dados e aplicam regras de negócio.
+5. O controller envia os dados para a view.
+6. A **view** renderiza o HTML e devolve a resposta ao browser.
+
+A imagem abaixo representa o fluxo da arquitetura MVC utilizada no projeto:
+
+![Diagrama da Arquitetura MVC](app/assets/images/arquitetura.png)
+
 
 ## 🛠️ Como rodar o projeto
 
@@ -101,9 +116,8 @@ db/
 ├─ schema.rb
 ```
 
-## 🔗 Contato / Referências
+## 🔗 Referências
 
-* V360 – [https://www.v360.com.br](https://www.v360.com.br)
 * Documentação Rails – [https://guides.rubyonrails.org/](https://guides.rubyonrails.org/)
 
 
